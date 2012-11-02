@@ -4,20 +4,29 @@ object Circuit {
   val OUTPUT_DEV_NAME = "out"
 }
 
+// Represents a boolean circuit consisting of some number of Devices.
+// The list of Connections specifies how the outputs are connected to
+// the device inputs.  One device should be specified as the output
+// device.
 class Circuit(val devices : List[Device], val connections : List[Connection]) {
-  
+  // Create an empty Circuit.
+  // Useful as a starting point.
   def this() = {
     this(List(), List())
   }
   
+  // Produce a new Circuit by adding a device to this Circuit.
   def addDevice(device : Device) : Circuit = {
     return new Circuit(device :: devices, connections)
   }
   
+  // Produce a new Circuit by adding a Connection to this circuit.
   def addConnection(connection : Connection) : Circuit = {
     return new Circuit(devices, connection :: connections)
   }
   
+  // Given map of inputs to their values, compute the Boolean
+  // result produced by the output device.
   def compute(inputs : Map[String, Boolean]) : Boolean = {
     // Set each device output to false
     val initDeviceOutputs = devices.map(device => (device.name, false)).toMap
